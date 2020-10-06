@@ -1,5 +1,4 @@
-<nav>
-  <h2>Website Navigation</h2>
+<nav>  
   <ul>
     <li>
       <a href="index.php">
@@ -7,8 +6,8 @@
       </a>
     </li>
     <li>
-      <a href="api.php">
-        API data
+      <a href="stock-data.php">
+        Stock Data
       </a>
     </li>    
   </ul>

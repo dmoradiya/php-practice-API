@@ -8,9 +8,9 @@ include './templates/header.php';
 ?>
 
 <p>
-  Welcome to our
-  <?php echo $GLOBALS['pageTitle']; ?>
-  page!
+  Welcome to 
+  <?php echo $GLOBALS['pageTitle']; ?>!
+  
 </p>
 
 <!--Stock data Request Form--> 
@@ -47,10 +47,18 @@ if ( isset( $_POST['symbol'] ) )
   {
     $stockData = json_decode( $stockDataResponse );
      ?>
-     <?php if( !empty($stockData) ) : ?>
-     
+      <!--Check weather current date is less than the input date-->
+      <?php if(  date("Y-m-d") < $_POST['date'] ) : ?>
+        <p><?php echo 'Please Enter Valid Past Date!' ?></p>
+
+      <!--Check the weekend date-->
+      <?php elseif( $stockData->{'Time Series (Daily)'}->{$_POST['date']} === NULL ) : ?>
+      <p><?php echo 'Trading closed for the day!' ?></p>
+      
+      <!--Check the object is not empty-->
+      <?php elseif( !empty($stockData) ) : ?>     
        <!--var_dump($stockData->{'Time Series (Daily)'}->{'2020-10-05'}->{'4. close'});-->
-       <h2>Stock Name : <?php echo $_POST['symbol']?> and it's price on <?php echo $_POST['date'] ?>  </h2>
+       <h2>Stock Data </h2>
         <table >
           <tr>
             <th><?php echo $_POST['symbol'] ?></th>
@@ -58,36 +66,33 @@ if ( isset( $_POST['symbol'] ) )
           </tr>
           <tr>
             <td>Open:</td>
-            <td><?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'1. open'} ?></td>
-            
+            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'1. open'} ?></td>            
           </tr>
           <tr>
             <td>High:</td>
-            <td>Jackson</td>            
+            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'2. high'} ?></td>           
           </tr>
           <tr>
             <td>Low:</td>
-            <td>Jackson</td>            
+            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'3. low'} ?></td>            
           </tr>
           <tr>
             <td>Close:</td>
-            <td>Jackson</td>            
+            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'4. close'} ?></td>            
           </tr>
           <tr>
             <td>Volume:</td>
-            <td>Jackson</td>            
-          </tr>
-          
+            <td><?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'6. volume'} ?></td>         
+          </tr>          
         </table>
-       <?php endif; ?>
+      <?php else : ?>
+        <p>Trading was closed.</p>
+      <?php endif; ?>
     <?php
   }
 }
-
-
-
-
-
+//  var_dump(  date("Y-m-d") > $_POST['date'] ); 
+//  var_dump(  $stockData->{'Time Series (Daily)'}->{$_POST['date']} ); 
 
 
  // Show our footer.
