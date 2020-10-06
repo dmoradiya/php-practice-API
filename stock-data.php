@@ -49,11 +49,11 @@ if ( isset( $_POST['symbol'] ) )
      ?>
       <!--Check weather current date is less than the input date-->
       <?php if(  date("Y-m-d") < $_POST['date'] ) : ?>
-        <p><?php echo 'Please Enter Valid Past Date!' ?></p>
+        <p class=error-msg><?php echo 'Please Enter Valid Past Date!' ?></p>
 
       <!--Check the weekend date-->
       <?php elseif( $stockData->{'Time Series (Daily)'}->{$_POST['date']} === NULL ) : ?>
-      <p><?php echo 'Trading closed for the day!' ?></p>
+      <p class=error-msg><?php echo 'Trading closed for the day!' ?></p>
       
       <!--Check the object is not empty-->
       <?php elseif( !empty($stockData) ) : ?>     
@@ -66,19 +66,19 @@ if ( isset( $_POST['symbol'] ) )
           </tr>
           <tr>
             <td>Open:</td>
-            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'1. open'} ?></td>            
+            <td>$ <?php echo number_format($stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'1. open'},2) ?></td>            
           </tr>
           <tr>
             <td>High:</td>
-            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'2. high'} ?></td>           
+            <td>$ <?php echo number_format($stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'2. high'},2) ?></td>           
           </tr>
           <tr>
             <td>Low:</td>
-            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'3. low'} ?></td>            
+            <td>$ <?php echo number_format($stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'3. low'},2) ?></td>            
           </tr>
           <tr>
             <td>Close:</td>
-            <td>$ <?php echo $stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'4. close'} ?></td>            
+            <td>$ <?php echo number_format($stockData->{'Time Series (Daily)'}->{$_POST['date']}->{'4. close'},2) ?></td>            
           </tr>
           <tr>
             <td>Volume:</td>
